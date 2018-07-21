@@ -1,0 +1,17 @@
+Feature Request: Trigger Search by Pressing Enter
+July 20, 2018
+
+OBJECTIVE
+To give users the ability to trigger a search by pressing the enter key on their keyboards.
+BACKGROUND 
+Currently, Jamming will trigger a search only by clicking the “SEARCH” button. This is inconvenient given the need for typing right before a search (to input a search term) as well as right after the first search (to log into Spotify). Further, the Spotify login page already supports the ability to complete login via the Enter key. This feature adds the ability to search by pressing Enter as well as clicking the “SEARCH” button, allowing the application to flow better, especially on the first search.
+TECHNICAL DESIGN
+In SearchBar.js, we will add an event handler, .handleEnter(), which will activate any time a key is pressed within the search bar component. This event handler will be passed an event argument. It will then check to see if the key code of this event (which will contain the code of whichever key was pressed) is equal to “enter”. If it is, the event handler will trigger the same response which would follow clicking the “SEARCH” button - first, calling the .login() method, and then calling the .search() method. 
+The search term will already be saved in the state of App.js, and as such will not need to be used further.
+
+
+CAVEATS
+This feature will only function when the search bar component is active (i.e. when a user has the search box selected). This may confuse a user who expects an enter press to act regardless of which element on the page is active. However, several factors make this treatment favorable:
+A search will generally only be performed directly following the typing of a search term, thus most users will not notice the limitation. 
+All other actions in the application (adding or removing a track from the playlist and saving the playlist to Spotify) currently require some use of the mouse. Interacting with other parts of the page before executing a search thus nullifies the convenience of this feature because the user is already switching between the mouse and the keyboard.
+By limiting the scope of the enter press event handler to the search bar, we reserve the ability to add future features which use an enter press as a trigger. For example, an enter press within the playlist component could save a user’s playlist to Spotify. 
